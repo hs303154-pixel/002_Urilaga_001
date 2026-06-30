@@ -140,7 +140,7 @@ export default function App() {
             <video
               ref={heroVideoRef}
               src={VIDEO_URLS.hero}
-              className="w-full h-full object-contain object-bottom scale-[0.7] origin-bottom"
+              className="w-full h-full object-contain object-bottom scale-[0.7] origin-bottom mix-blend-screen"
               playsInline
               muted
               preload="auto"
