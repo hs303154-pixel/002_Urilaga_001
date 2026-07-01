@@ -8,9 +8,6 @@ export interface PartyShop {
 
 export const partyShops: PartyShop[] = [
   // Existing approved shops
-  { id: '2', name: '러브헌터', description: '감성 파스텔 심플 생일상 세트 및 소품', url: 'https://smartstore.naver.com/lovehunter', tags: [] },
-  { id: '6', name: '뭉치 공방', description: '정성가득 강아지 생일상, 전통 돌상 대여 전문', url: 'https://smartstore.naver.com/moongchi_studio', tags: [] },
-  { id: '12', name: '화예원', description: '곰돌이 생일상 세트 및 파티 장식 소품', url: 'https://smartstore.naver.com/hwayeawon', tags: [] },
   { id: '13', name: '노가다손꾸락', description: '백일/돌상용 클레이 모형 케이크, 모형 떡 맞춤 제작', url: 'https://smartstore.naver.com/nogadafinger', tags: [] },
   
   // Previous 40 shops added by user
