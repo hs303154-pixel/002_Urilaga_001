@@ -1,24 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { collection, onSnapshot, query, orderBy, doc, updateDoc, increment } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
-
-// 샘플 데이터 (투표 로직 테스트용 펫 1마리 + 나머지 빈 박스)
-const initialPets = [
-  { id: 999, name: '테스트(투표가능)', petId: 'TEST001', image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=500&q=80', hearts: 100, localHearts: 0 },
-  ...Array.from({ length: 17 }).map((_, i) => ({
-    id: i + 1,
-    name: '',
-    petId: '',
-    image: null,
-    hearts: 0,
-    localHearts: 0
-  }))
-];
+const initialEmptyPets = Array.from({ length: 18 }).map((_, i) => ({
+  id: `empty-init-${i}`,
+  name: '',
+  petId: '',
+  image: null,
+  hearts: 0,
+  localHearts: 0
+}));
 
 export function PetBragGallery() {
-  const [pets, setPets] = React.useState(initialPets);
+  const [pets, setPets] = useState<any[]>(initialEmptyPets);
+
+  useEffect(() => {
+    const q = query(collection(db, 'pets'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedPets = snapshot.docs.map(doc => ({
+        id: doc.id,
+        localHearts: 0,
+        ...doc.data()
+      }));
+      
+      const emptyCount = 18 - fetchedPets.length;
+      const emptySlots = emptyCount > 0 
+        ? Array.from({ length: emptyCount }).map((_, i) => ({
+            id: `empty-dyn-${i}`, name: '', petId: '', image: null, hearts: 0, localHearts: 0
+          }))
+        : [];
+        
+      setPets([...fetchedPets, ...emptySlots].slice(0, 18));
+    }, (error) => {
+      console.error("Firebase fetch error: ", error);
+    });
+
+    return () => unsubscribe();
+  }, []);
   
-  const bestPets = [...pets].filter(p => p.image).sort((a, b) => b.localHearts - a.localHearts).slice(0, 6);
+  const bestPets = [...pets].filter(p => p.image).sort((a, b) => (b.hearts + b.localHearts) - (a.hearts + a.localHearts)).slice(0, 6);
   while (bestPets.length < 6) {
     bestPets.push({ id: `empty-best-${bestPets.length}`, image: null, hearts: 0, localHearts: 0, name: '', petId: '' });
   }
@@ -80,7 +101,7 @@ export function PetBragGallery() {
                 <div className="flex justify-end items-center gap-1.5 pr-3 pb-1 opacity-70">
                   <div className="flex items-center gap-1.5 text-lg">
                     <span className="drop-shadow-md">❤️</span>
-                    <span className="text-sm text-[#94A3B8] font-bold">{pet.hearts + pet.localHearts}</span>
+                    <span className="text-sm text-[#94A3B8] font-bold">{pet.hearts}</span>
                   </div>
                 </div>
               )}
@@ -119,13 +140,19 @@ export function PetBragGallery() {
                 <div className="flex justify-end items-center gap-1.5 pr-3 pb-1 opacity-70 hover:opacity-100 transition-opacity">
                   <button 
                     className="flex items-center gap-1.5 text-lg hover:scale-110 transition-transform cursor-pointer"
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.stopPropagation();
-                      setPets(pets.map(p => p.id === pet.id ? { ...p, localHearts: p.localHearts + 1 } : p));
+                      if (pet.id.startsWith('empty-')) return;
+                      try {
+                        const petRef = doc(db, 'pets', pet.id);
+                        await updateDoc(petRef, { hearts: increment(1) });
+                      } catch (error) {
+                        console.error('Error updating heart: ', error);
+                      }
                     }}
                   >
                     <span className="drop-shadow-md">❤️</span>
-                    <span className="text-sm text-[#94A3B8] font-bold">{pet.hearts + pet.localHearts}</span>
+                    <span className="text-sm text-[#94A3B8] font-bold">{pet.hearts}</span>
                   </button>
                 </div>
               )}
