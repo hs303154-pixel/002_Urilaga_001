@@ -81,8 +81,7 @@ export function PetBragGallery() {
           {bestPets.map((pet, idx) => (
             <div key={pet.id} className="flex flex-col gap-2">
               <motion.div 
-                className={`relative aspect-square rounded-3xl overflow-hidden cursor-pointer group shadow-sm transition-all duration-300 hover:shadow-pink-500/50 hover:border-pink-400 ${pet.image ? 'border-2 border-pink-300 shadow-[0_0_15px_rgba(251,207,232,0.4)]' : 'bg-pink-900/30 border-2 border-pink-500/60 shadow-[inset_0_0_20px_rgba(236,72,153,0.2)]'}`}
-                onClick={pet.image ? undefined : handleRedirect}
+                className={`relative aspect-square rounded-3xl overflow-hidden group shadow-sm transition-all duration-300 hover:shadow-pink-500/50 hover:border-pink-400 ${pet.image ? 'border-2 border-pink-300 shadow-[0_0_15px_rgba(251,207,232,0.4)]' : 'bg-pink-900/30 border-2 border-pink-500/60 shadow-[inset_0_0_20px_rgba(236,72,153,0.2)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
@@ -123,8 +122,7 @@ export function PetBragGallery() {
           {recentPets.map((pet, idx) => (
             <div key={pet.id} className="flex flex-col gap-2">
               <motion.div 
-                className={`relative aspect-square rounded-3xl overflow-hidden cursor-pointer group shadow-sm transition-all duration-300 hover:shadow-blue-500/40 hover:border-blue-400 ${pet.image ? 'bg-black border border-white/10' : 'bg-white/10 border-2 border-white/40 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]'}`}
-                onClick={pet.image ? undefined : handleRedirect}
+                className={`relative aspect-square rounded-3xl overflow-hidden group shadow-sm transition-all duration-300 hover:shadow-blue-500/40 hover:border-blue-400 ${pet.image ? 'bg-black border border-white/10' : 'bg-white/10 border-2 border-white/40 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
