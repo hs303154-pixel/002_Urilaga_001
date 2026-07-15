@@ -7,6 +7,13 @@ export interface PartyShop {
 }
 
 export const partyShops: PartyShop[] = [
+  // Newly added by user
+  { id: '140', name: '피오니공방', description: '반려동물을 위한 감성적인 파티 소품', url: 'https://smartstore.naver.com/peonystudio/category/67f03038176f426cbddc9ca3af60b8e8?cp=1', tags: [] },
+  { id: '141', name: '뭉미샵', description: '트렌디한 반려동물 파티 및 패션 소품', url: 'https://smartstore.naver.com/mihizzzz12', tags: [] },
+  { id: '142', name: '펫피데이', description: '특별한 날을 빛내줄 파티 아이템', url: 'https://smartstore.naver.com/petppyday/category/be8a16e5451043d4bfcce8323328e8a2?cp=1', tags: [] },
+  { id: '143', name: '파티바이미', description: '우리아이 생일을 위한 완벽한 파티 세트', url: 'https://smartstore.naver.com/partybyme', tags: [] },
+  { id: '144', name: 'witiwiti', description: '귀엽고 아기자기한 강아지 파티 용품', url: 'https://smartstore.naver.com/witiwiti/category/d5a9ab9e1b4b405ba92d32a2dc72ca9c?cp=1', tags: [] },
+
   // Existing approved shops
   { id: '13', name: '노가다손꾸락', description: '백일/돌상용 클레이 모형 케이크, 모형 떡 맞춤 제작', url: 'https://smartstore.naver.com/nogadafinger', tags: [] },
   
@@ -42,6 +49,7 @@ export const partyShops: PartyShop[] = [
 ];
 
 export const fashionShops: PartyShop[] = [
+  { id: '240', name: '펫 클래스', description: '트렌디하고 편안한 반려동물 패션 상점', url: 'https://smartstore.naver.com/petclassmall', tags: [] },
   { id: '200', name: '마둥마둥', description: '트렌디하고 편안한 반려동물 패션 상점', url: 'https://smartstore.naver.com/madoongmadoong', tags: [] },
   { id: '201', name: '트위니트위니', description: '트렌디하고 편안한 반려동물 패션 상점', url: 'https://smartstore.naver.com/twiny0602', tags: [] },
   { id: '202', name: '르쁘띠숑', description: '트렌디하고 편안한 반려동물 패션 상점', url: 'https://smartstore.naver.com/lepetitchiot', tags: [] },

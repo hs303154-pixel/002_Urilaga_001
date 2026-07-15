@@ -6,26 +6,26 @@
 
 export const SITE_CONFIG = {
   // 브랜드
-  brandName: '팻 갤러리',
-  copyright: '© 2026 Pet Gallery. All rights reserved.',
+  brandName: 'U-AGA 라운지',
+  copyright: '© 2026 U-AGA Lounge. All rights reserved.',
 
   // 히어로 섹션
   hero: {
     titleLeft: ['평범한 일상도', '특별한'],
     titleRight: ['기념일이', '됩니다'],
-    watermark: 'PET GALLERY',
+    watermark: 'U-AGA LOUNGE',
     description:
       '반려동물과 함께하는 모든 순간을 특별하게. 한국과 글로벌의 트렌디한 강아지, 고양이 파티 용품, 감각적인 옷, 건강한 먹거리를 큐레이션합니다.',
   },
 
   // 시네마틱 텍스트 섹션
   cinematic: {
-    text: '팻 갤러리는 단순히 상품을 소개하는 곳이 아닙니다. 사랑하는반려동물의 기념일, 파티, 패션, 먹거리를 소개 하는 사이트입니다. 평범한 일상도 특별한 추억으로 만들어줄 숨겨진 보석 같은 아이템들을 찾아 안내 합니다. 우리의 큐레이션으로 당신의 반려동물에게 행복한 하루를 선물하세요.',
+    text: '우리아가(U-AGA)의 세계에 오신 것을 환영합니다. 이곳은 숨겨진 보석 같은 아이템을 소개하는 갤러리이자, 우리 아이의 가장 예쁜 순간을 전 세계와 나누는 글로벌 무대입니다. 매일 입는 옷과 먹거리부터, 건강을 책임질 병원 정보, 마지막 소풍을 위한 장례식장 안내까지. 반려동물과 함께하는 당신의 모든 시간에 가장 완벽하고 든든한 길잡이가 되겠습니다. 우리의 큐레이션으로 오늘 하루를, 그리고 평생의 추억을 선물하세요.',
   },
 
   // 성능 지표 섹션 (카테고리 카드로 대체됨)
   metrics: {
-    subtitle: 'PET GALLERY CATEGORIES',
+    subtitle: 'U-AGA LOUNGE CATEGORIES',
     items: [
       { 
         label: '파티', 

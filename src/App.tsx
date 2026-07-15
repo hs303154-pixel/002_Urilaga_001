@@ -5,14 +5,16 @@ import {
   useTransform,
   useSpring,
   useMotionTemplate,
+  AnimatePresence,
 } from 'framer-motion';
 import {
   PartyPopper, Cake, Gift, TreePine, Ghost, Tent, Camera,
   Shirt, Sun, CloudSnow, Umbrella, Crown, Users,
-  Bone, CakeSlice, Cookie, Salad, Utensils
+  Bone, CakeSlice, Cookie, Salad, Utensils, Heart, Sparkles, Navigation
 } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { ScrambleIn } from './components/ScrambleText';
+import { TypewriterText } from './components/TypewriterText';
 import { ConnectAILabLogo } from './components/ConnectAILabLogo';
 import PayPalCheckoutButton from './components/payment/PayPalCheckoutButton';
 import TossCheckoutButton from './components/payment/TossCheckoutButton';
@@ -26,6 +28,14 @@ import { partyShops, fashionShops, foodShops } from './data/partyShops';
 import { PartyPage } from './pages/PartyPage';
 import { FashionPage } from './pages/FashionPage';
 import { FoodPage } from './pages/FoodPage';
+import { HospitalsPage } from './pages/HospitalsPage';
+import { PharmaciesPage } from './pages/PharmaciesPage';
+import { FacilitiesPage } from './pages/FacilitiesPage';
+import { TrailsPage } from './pages/TrailsPage';
+import { SalonsPage } from './pages/SalonsPage';
+import { FuneralsPage } from './pages/FuneralsPage';
+import { PetGallery } from './components/PetGallery';
+import { PetBragGallery } from './components/PetBragGallery';
 
 const IconMap: Record<string, React.ElementType> = {
   PartyPopper, Cake, Gift, TreePine, Ghost, Tent, Camera,
@@ -33,8 +43,10 @@ const IconMap: Record<string, React.ElementType> = {
   Bone, CakeSlice, Cookie, Salad, Utensils
 };
 
+export type ActivePage = 'home' | 'party' | 'fashion' | 'food' | 'hospital' | 'pharmacy' | 'facility' | 'trail' | 'salon' | 'funeral';
+
 export default function App() {
-  const [activePage, setActivePage] = useState<'home' | 'party' | 'fashion' | 'food'>('home');
+  const [activePage, setActivePage] = useState<ActivePage>('home');
   const [entranceComplete, setEntranceComplete] = useState(false);
   const { user } = useAuth();
 
@@ -124,16 +136,71 @@ export default function App() {
   /* ── Destructure config for readability ── */
   const { hero, cinematic, metrics, technology, architecture, footer } = SITE_CONFIG;
 
-  if (activePage === 'party') return <PartyPage onBack={() => setActivePage('home')} onNavigate={setActivePage} />;
-  if (activePage === 'fashion') return <FashionPage onBack={() => setActivePage('home')} onNavigate={setActivePage} />;
-  if (activePage === 'food') return <FoodPage onBack={() => setActivePage('home')} onNavigate={setActivePage} />;
+  const handleNavigate = (page: string) => {
+    if (page === 'info') {
+      setActivePage('home');
+      setTimeout(() => {
+        section2Ref.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      setActivePage(page as any);
+    }
+  };
+
+  if (activePage === 'party') return <PartyPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'fashion') return <FashionPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'food') return <FoodPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'hospital') return <HospitalsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'pharmacy') return <PharmaciesPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'facility') return <FacilitiesPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'trail') return <TrailsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'salon') return <SalonsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'funeral') return <FuneralsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
 
   return (
     <div style={{ fontFamily: '"Space Mono", monospace' }}>
-      <Navbar entranceComplete={entranceComplete} onNavigate={setActivePage} />
+      <Navbar entranceComplete={entranceComplete} onNavigate={handleNavigate} />
+      
+      {/* 아가포토 드롭다운 팝업 버튼 */}
+      <div className="fixed top-24 right-8 z-50 group">
+        
+        {/* 메인 버튼 (고정) */}
+        <div className="flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full shadow-lg transition-all duration-300 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:bg-white/20 cursor-default">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+          </span>
+          <span className="text-white font-extrabold text-lg tracking-wide whitespace-nowrap">아가포토 바로가기</span>
+        </div>
+
+        {/* Hover 시 뜨는 팝업창 (아래로 드롭다운) */}
+        <div className="absolute top-full mt-3 right-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 flex flex-col gap-2 bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-2xl shadow-[0_10_30px_rgba(0,0,0,0.5)]">
+          <button 
+            className="flex items-center gap-3 px-6 py-3 hover:bg-white/20 rounded-xl transition-all w-full text-left"
+            onClick={() => window.open('https://u-agapotohwp.vercel.app', '_blank')}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+            </span>
+            <span className="text-white font-bold text-sm tracking-wider whitespace-nowrap">한글판 (KOR)</span>
+          </button>
+          
+          <button 
+            className="flex items-center gap-3 px-6 py-3 hover:bg-white/20 rounded-xl transition-all w-full text-left"
+            onClick={() => window.open('https://u-agapoto.xyz', '_blank')}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            <span className="text-white font-bold text-sm tracking-wider whitespace-nowrap">글로벌판 (ENG)</span>
+          </button>
+        </div>
+      </div>
 
       {/* ════════════════ SECTION 1: HERO ════════════════ */}
-      <section className="relative h-screen h-[100dvh] flex flex-col overflow-hidden">
+      <section className="relative h-screen h-[100dvh] flex flex-col">
         {/* Video background (mouse-scrubbed) */}
         {VIDEO_URLS.hero && (
           <div className="absolute inset-x-0 top-0 bottom-8 sm:bottom-12 pointer-events-none">
@@ -232,16 +299,16 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* ════════════════ SECTION 2: CINEMATIC TEXT ════════════════ */}
+      {/* ════════════════ SECTION 2: CINEMATIC TEXT & INFO BOARD ════════════════ */}
       <section
         ref={section2Ref}
-        className="star-wars-space"
+        className="relative w-full h-screen bg-black flex flex-col md:flex-row"
       >
         {/* Video background */}
         {VIDEO_URLS.section2 && (
           <video
             src={VIDEO_URLS.section2}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover opacity-60"
             autoPlay
             muted
             loop
@@ -258,14 +325,98 @@ export default function App() {
           }}
         />
 
-        {/* 3D text content */}
-        <p className="star-wars-crawl font-sans font-normal text-[20px] sm:text-[26px] md:text-[32px] lg:text-[38px] tracking-[-0.02em] select-none pointer-events-none">
-          {cinematic.text}
-        </p>
+        {/* Left column: Cinematic Text */}
+        <div className="relative w-full md:w-1/2 h-1/2 md:h-full z-20 flex items-center justify-center md:border-r border-white/10 p-8 md:p-16">
+          <TypewriterText 
+            text={cinematic.text} 
+            speed={50}
+            className="font-sans font-normal text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] tracking-[-0.02em] leading-relaxed text-white/90" 
+          />
+        </div>
+
+        {/* Right column: Information Board */}
+        <div className="relative w-full md:w-1/2 h-1/2 md:h-full z-20 flex flex-col items-center justify-center p-6 md:p-12 bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-md flex flex-col items-start">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-widest mb-6">정보게시판</h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full">
+              {/* Card 1: Animal Hospital */}
+              <div 
+                onClick={() => setActivePage('hospital')}
+                className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-blue-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+              >
+                <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">🏥</span>
+              <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-blue-400 transition-colors">전국동물병원</span>
+              <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
+                우리아가 주변의<br/>안전한 주치의
+              </span>
+            </div>
+            
+              {/* Card 2: Animal Pharmacy */}
+            <div 
+              onClick={() => setActivePage('pharmacy')}
+              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-pink-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(244,114,182,0.3)]"
+            >
+              <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">💊</span>
+              <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-pink-400 transition-colors">전국동물약국</span>
+              <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
+                반려동물 의약품<br/>취급처 안내
+              </span>
+            </div>
+            {/* Card 3: Pet Facilities */}
+            <div 
+              onClick={() => setActivePage('facility')}
+              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-amber-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]"
+            >
+              <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">☕</span>
+              <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-amber-400 transition-colors">동반 시설</span>
+              <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
+                식당/카페 등<br/>동반가능 장소
+              </span>
+            </div>
+              
+            {/* Card 4: Trails */}
+            <div 
+              onClick={() => setActivePage('trail')}
+              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-green-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(74,222,128,0.3)]"
+            >
+               <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">🌳</span>
+               <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-green-400 transition-colors">산책로/여행지</span>
+               <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
+                 자연 속 힐링<br/>야외 공간
+               </span>
+            </div>
+
+            {/* Card 5: Beauty Salon */}
+            <div 
+              onClick={() => setActivePage('salon')}
+              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-fuchsia-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(217,70,239,0.3)]"
+            >
+               <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">✂️</span>
+               <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-fuchsia-400 transition-colors">동물 미용실</span>
+               <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
+                 깔끔하고 예쁘게<br/>미용/스파
+               </span>
+            </div>
+
+            {/* Card 6: Funeral Home */}
+            <div 
+              onClick={() => setActivePage('funeral')}
+              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-zinc-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(161,161,170,0.3)] overflow-hidden"
+            >
+               <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">🕯️</span>
+               <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-zinc-400 transition-colors whitespace-nowrap tracking-tight">장례식장</span>
+               <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed break-keep">
+                 소중한 아이와의<br/>마지막 소풍
+               </span>
+            </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ════════════════ SECTION 3: METRICS ════════════════ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      <section className="relative min-h-screen flex items-center justify-center bg-black">
         {/* Video background (restored) */}
         {VIDEO_URLS.metrics && (
           <video
@@ -290,149 +441,16 @@ export default function App() {
             PET GALLERY COLLECTION
           </motion.p>
           
-          {/* User's custom image cards wrapped in a gray box */}
-          <div className="mt-36 relative bg-gray-100 rounded-[40px] p-8 sm:p-12 lg:p-20 w-full max-w-[1000px] shadow-2xl border border-gray-200 overflow-hidden">
-            
-            {/* Background Decorative Icons (Darker, Smaller, Irregularly Scattered) */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-40 hidden md:block">
-              {/* Top row / Upper section */}
-              <svg className="absolute top-[5%] left-[10%] w-6 h-6 text-gray-400 transform -rotate-12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm-7 7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm-7 4c-3.3 0-6 2.7-6 6v3h12v-3c0-3.3-2.7-6-6-6z"/>
-              </svg>
-              <svg className="absolute top-[8%] left-[25%] w-5 h-5 text-gray-500 transform rotate-45" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 4c-2.2 0-4 1.8-4 4 0 .3 0 .6.1.8-1-.5-2.2-.8-3.4-.8s-2.4.3-3.4.8c.1-.2.1-.5.1-.8 0-2.2-1.8-4-4-4S0 5.8 0 8s1.8 4 4 4c.3 0 .6 0 .8-.1-.5 1-.8 2.2-.8 3.4s.3 2.4.8 3.4c-.2-.1-.5-.1-.8-.1-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4c0-.3 0-.6-.1-.8 1 .5 2.2.8 3.4.8s2.4-.3 3.4-.8c-.1.2-.1.5-.1.8 0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4c-.3 0-.6 0-.8.1.5-1 .8-2.2.8-3.4s-.3-2.4-.8-3.4c.2.1.5.1.8.1 2.2 0 4-1.8 4-4s-1.8-4-4-4z"/>
-              </svg>
-              <svg className="absolute top-[12%] left-[45%] w-7 h-7 text-gray-400 transform -rotate-6" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21.5 5.5l-4-4-2.5 2.5-3-3-3 3-2.5-2.5-4 4 2 8 2-2v10h10v-10l2 2 2-8z"/>
-              </svg>
-              <svg className="absolute top-[4%] right-[30%] w-4 h-4 text-gray-500 transform rotate-[20deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
-              </svg>
-              <svg className="absolute top-[10%] right-[15%] w-6 h-6 text-gray-400 transform -rotate-[15deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm-7 7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm-7 4c-3.3 0-6 2.7-6 6v3h12v-3c0-3.3-2.7-6-6-6z"/>
-              </svg>
-              <svg className="absolute top-[18%] right-[5%] w-5 h-5 text-gray-500 transform rotate-[30deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21.5 5.5l-4-4-2.5 2.5-3-3-3 3-2.5-2.5-4 4 2 8 2-2v10h10v-10l2 2 2-8z"/>
-              </svg>
-              
-              {/* Mid-level / Sides / Gaps */}
-              <svg className="absolute top-[30%] left-[2%] w-6 h-6 text-gray-400 transform -rotate-45" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 4c-2.2 0-4 1.8-4 4 0 .3 0 .6.1.8-1-.5-2.2-.8-3.4-.8s-2.4.3-3.4.8c.1-.2.1-.5.1-.8 0-2.2-1.8-4-4-4S0 5.8 0 8s1.8 4 4 4c.3 0 .6 0 .8-.1-.5 1-.8 2.2-.8 3.4s.3 2.4.8 3.4c-.2-.1-.5-.1-.8-.1-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4c0-.3 0-.6-.1-.8 1 .5 2.2.8 3.4.8s2.4-.3 3.4-.8c-.1.2-.1.5-.1.8 0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4c-.3 0-.6 0-.8.1.5-1 .8-2.2.8-3.4s-.3-2.4-.8-3.4c.2.1.5.1.8.1 2.2 0 4-1.8 4-4s-1.8-4-4-4z"/>
-              </svg>
-              <svg className="absolute top-[40%] left-[31%] w-5 h-5 text-gray-500 transform -rotate-12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-              <svg className="absolute top-[55%] right-[32%] w-4 h-4 text-gray-400 transform rotate-45" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
-              </svg>
-              <svg className="absolute top-[45%] right-[2%] w-7 h-7 text-gray-500 transform rotate-[10deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm-7 7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm-7 4c-3.3 0-6 2.7-6 6v3h12v-3c0-3.3-2.7-6-6-6z"/>
-              </svg>
-              <svg className="absolute top-[60%] left-[5%] w-5 h-5 text-gray-400 transform rotate-[15deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-              <svg className="absolute top-[75%] right-[4%] w-6 h-6 text-gray-500 transform -rotate-[20deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 4c-2.2 0-4 1.8-4 4 0 .3 0 .6.1.8-1-.5-2.2-.8-3.4-.8s-2.4.3-3.4.8c.1-.2.1-.5.1-.8 0-2.2-1.8-4-4-4S0 5.8 0 8s1.8 4 4 4c.3 0 .6 0 .8-.1-.5 1-.8 2.2-.8 3.4s.3 2.4.8 3.4c-.2-.1-.5-.1-.8-.1-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4c0-.3 0-.6-.1-.8 1 .5 2.2.8 3.4.8s2.4-.3 3.4-.8c-.1.2-.1.5-.1.8 0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4c-.3 0-.6 0-.8.1.5-1 .8-2.2.8-3.4s-.3-2.4-.8-3.4c.2.1.5.1.8.1 2.2 0 4-1.8 4-4s-1.8-4-4-4z"/>
-              </svg>
-              <svg className="absolute top-[70%] left-[33%] w-6 h-6 text-gray-500 transform -rotate-[10deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21.5 5.5l-4-4-2.5 2.5-3-3-3 3-2.5-2.5-4 4 2 8 2-2v10h10v-10l2 2 2-8z"/>
-              </svg>
-              
-              {/* Bottom row */}
-              <svg className="absolute bottom-[5%] left-[8%] w-6 h-6 text-gray-400 transform rotate-12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm-7 7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm-7 4c-3.3 0-6 2.7-6 6v3h12v-3c0-3.3-2.7-6-6-6z"/>
-              </svg>
-              <svg className="absolute bottom-[10%] left-[28%] w-5 h-5 text-gray-500 transform -rotate-45" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 4c-2.2 0-4 1.8-4 4 0 .3 0 .6.1.8-1-.5-2.2-.8-3.4-.8s-2.4.3-3.4.8c.1-.2.1-.5.1-.8 0-2.2-1.8-4-4-4S0 5.8 0 8s1.8 4 4 4c.3 0 .6 0 .8-.1-.5 1-.8 2.2-.8 3.4s.3 2.4.8 3.4c-.2-.1-.5-.1-.8-.1-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4c0-.3 0-.6-.1-.8 1 .5 2.2.8 3.4.8s2.4-.3 3.4-.8c-.1.2-.1.5-.1.8 0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4c-.3 0-.6 0-.8.1.5-1 .8-2.2.8-3.4s-.3-2.4-.8-3.4c.2.1.5.1.8.1 2.2 0 4-1.8 4-4s-1.8-4-4-4z"/>
-              </svg>
-              <svg className="absolute bottom-[15%] left-[48%] w-4 h-4 text-gray-400 transform rotate-6" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
-              </svg>
-              <svg className="absolute bottom-[8%] right-[32%] w-6 h-6 text-gray-500 transform -rotate-[30deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21.5 5.5l-4-4-2.5 2.5-3-3-3 3-2.5-2.5-4 4 2 8 2-2v10h10v-10l2 2 2-8z"/>
-              </svg>
-              <svg className="absolute bottom-[5%] right-[12%] w-7 h-7 text-gray-400 transform rotate-[25deg]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm-7 7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm-7 4c-3.3 0-6 2.7-6 6v3h12v-3c0-3.3-2.7-6-6-6z"/>
-              </svg>
-            </div>
-
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-36 w-full">
-              {/* 1. 파티 카드 */}
-              <motion.div 
-                onClick={() => setActivePage('party')}
-                className="w-full relative rounded-[32px] overflow-hidden shadow-lg cursor-pointer z-10 border-2 border-black/25"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -12, 
-                  filter: "brightness(1.1)",
-                  boxShadow: "0px 30px 60px rgba(0,0,0,0.2)",
-                  zIndex: 20
-                }}
-                transition={{ duration: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <img 
-                  src="/s3_paty.png?v=4" 
-                  alt="파티 카드" 
-                  className="w-full h-auto object-cover"
-                />
-              </motion.div>
-
-              {/* 2. 패션 카드 */}
-              <motion.div 
-                onClick={() => setActivePage('fashion')}
-                className="w-full relative rounded-[32px] overflow-hidden shadow-lg cursor-pointer z-10 border-2 border-black/25"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -12, 
-                  filter: "brightness(1.1)",
-                  boxShadow: "0px 30px 60px rgba(0,0,0,0.2)",
-                  zIndex: 20
-                }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                viewport={{ once: true }}
-              >
-                <img 
-                  src="/s3_Fashion.png" 
-                  alt="패션 카드" 
-                  className="w-full h-auto object-cover"
-                />
-              </motion.div>
-
-              {/* 3. 먹거리 카드 */}
-              <motion.div 
-                onClick={() => setActivePage('food')}
-                className="w-full relative rounded-[32px] overflow-hidden shadow-lg cursor-pointer z-10 border-2 border-black/25"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -12, 
-                  filter: "brightness(1.1)",
-                  boxShadow: "0px 30px 60px rgba(0,0,0,0.2)",
-                  zIndex: 20
-                }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <img 
-                  src="/s3_eat.png" 
-                  alt="먹거리 카드" 
-                  className="w-full h-auto object-cover"
-                />
-              </motion.div>
-            </div>
+          {/* Aga Photo Global Picks Gallery */}
+          <div className="mt-16 relative w-full">
+            <PetBragGallery />
           </div>
         </div>
       </section>
 
 
       {/* ════════════════ FOOTER ════════════════ */}
-      <footer className="bg-black overflow-hidden">
+      <footer className="bg-black">
         <div className="flex flex-col md:flex-row min-h-[400px]">
           {/* Left: Video */}
           <div className="md:w-1/2 h-[300px] md:h-auto relative">

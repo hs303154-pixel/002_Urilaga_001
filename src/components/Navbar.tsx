@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 interface NavbarProps {
   entranceComplete: boolean;
-  onNavigate?: (page: 'home' | 'party' | 'fashion' | 'food') => void;
+  onNavigate?: (page: 'home' | 'party' | 'fashion' | 'food' | 'hospital' | 'info') => void;
 }
 
 export function Navbar({ entranceComplete, onNavigate }: NavbarProps) {
@@ -47,8 +47,9 @@ export function Navbar({ entranceComplete, onNavigate }: NavbarProps) {
             >
               <span className="text-[32px] leading-none mb-1">🐶</span>
               <div className="flex flex-col justify-center">
-                <span className="text-[32px] font-bold tracking-tight text-white leading-none">
-                  팻 갤러리
+                <span className="font-bold tracking-tight leading-none flex items-baseline gap-1.5">
+                  <span className="text-[32px] text-white">U-AGA</span>
+                  <span className="text-[22px] text-white/80 font-medium">라운지</span>
                 </span>
               </div>
             </motion.div>
@@ -60,9 +61,10 @@ export function Navbar({ entranceComplete, onNavigate }: NavbarProps) {
           <div className="flex items-center gap-3">
             {onNavigate && (
               <>
-                <button onClick={() => onNavigate('party')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">파티</button>
-                <button onClick={() => onNavigate('fashion')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">패션</button>
-                <button onClick={() => onNavigate('food')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">먹거리</button>
+                <button onClick={() => onNavigate('info')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">정보게시판</button>
+                <button onClick={() => onNavigate('party')} className="px-5 py-2.5 bg-white/15 hover:bg-white/25 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">파티</button>
+                <button onClick={() => onNavigate('fashion')} className="px-5 py-2.5 bg-white/15 hover:bg-white/25 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">패션</button>
+                <button onClick={() => onNavigate('food')} className="px-5 py-2.5 bg-white/15 hover:bg-white/25 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">먹거리</button>
               </>
             )}
             <div className="font-bold tracking-[0.2em] text-lg ml-4 hidden md:block">U-AGA</div>
@@ -82,8 +84,9 @@ export function Navbar({ entranceComplete, onNavigate }: NavbarProps) {
             >
               <span className="text-[26px] shrink-0 leading-none">🐶</span>
               <div className="flex flex-col justify-center whitespace-nowrap">
-                <span className="text-[26px] font-bold tracking-tight text-white leading-none">
-                  팻 갤러리
+                <span className="font-bold tracking-tight leading-none flex items-baseline gap-1">
+                  <span className="text-[26px] text-white">U-AGA</span>
+                  <span className="text-[18px] text-white/80 font-medium">라운지</span>
                 </span>
               </div>
             </motion.div>
@@ -94,11 +97,12 @@ export function Navbar({ entranceComplete, onNavigate }: NavbarProps) {
           {/* Right buttons */}
           <div className="flex items-center gap-1.5 ml-2">
             {onNavigate && (
-              <>
-                <button onClick={() => onNavigate('party')} className="px-3 py-2 bg-white/15 hover:bg-blue-500 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">파티</button>
-                <button onClick={() => onNavigate('fashion')} className="px-3 py-2 bg-white/15 hover:bg-blue-500 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">패션</button>
-                <button onClick={() => onNavigate('food')} className="px-3 py-2 bg-white/15 hover:bg-blue-500 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">먹거리</button>
-              </>
+              <div className="flex overflow-x-auto gap-1.5 no-scrollbar">
+                <button onClick={() => onNavigate('info')} className="px-3 py-2 bg-white/15 hover:bg-blue-500 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm whitespace-nowrap">정보게시판</button>
+                <button onClick={() => onNavigate('party')} className="px-3 py-2 bg-white/15 hover:bg-white/25 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm whitespace-nowrap">파티</button>
+                <button onClick={() => onNavigate('fashion')} className="px-3 py-2 bg-white/15 hover:bg-white/25 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm whitespace-nowrap">패션</button>
+                <button onClick={() => onNavigate('food')} className="px-3 py-2 bg-white/15 hover:bg-white/25 text-white rounded-[10px] text-xs font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm whitespace-nowrap">먹거리</button>
+              </div>
             )}
             <div className="font-bold tracking-[0.2em] text-sm ml-2">U-AGA</div>
           </div>
