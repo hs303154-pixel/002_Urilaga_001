@@ -1,58 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { collection, onSnapshot, query, orderBy, doc, updateDoc, increment } from 'firebase/firestore';
-import { db } from '../config/firebase';
-
-const initialEmptyPets = Array.from({ length: 18 }).map((_, i) => ({
-  id: `empty-init-${i}`,
-  name: '',
-  petId: '',
-  image: null,
-  hearts: 0,
-  localHearts: 0
-}));
+import React from 'react';
 
 export function PetBragGallery() {
-  const [pets, setPets] = useState<any[]>(initialEmptyPets);
-
-  useEffect(() => {
-    const q = query(collection(db, 'pets'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetchedPets = snapshot.docs.map(doc => ({
-        id: doc.id,
-        localHearts: 0,
-        ...doc.data()
-      }));
-      
-      const emptyCount = 18 - fetchedPets.length;
-      const emptySlots = emptyCount > 0 
-        ? Array.from({ length: emptyCount }).map((_, i) => ({
-            id: `empty-dyn-${i}`, name: '', petId: '', image: null, hearts: 0, localHearts: 0
-          }))
-        : [];
-        
-      setPets([...fetchedPets, ...emptySlots].slice(0, 18));
-    }, (error) => {
-      console.error("Firebase fetch error: ", error);
-    });
-
-    return () => unsubscribe();
-  }, []);
-  
-  const bestPets = [...pets].filter(p => p.image).sort((a, b) => (b.hearts + b.localHearts) - (a.hearts + a.localHearts)).slice(0, 6);
-  while (bestPets.length < 6) {
-    bestPets.push({ id: `empty-best-${bestPets.length}`, image: null, hearts: 0, localHearts: 0, name: '', petId: '' });
-  }
-  
-  const recentPets = pets.slice(0, 18); // 일단 18개만 보여줌
-
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleRedirect = () => {
     window.open('https://u-agapotohwp.vercel.app', '_blank'); 
   };
-
-
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 flex flex-col items-center pb-20">
@@ -70,93 +22,6 @@ export function PetBragGallery() {
         >
           나도 내 펫 자랑하러 가기 🚀
         </button>
-      </div>
-
-      {/* 명예의 전당 (BEST 6) */}
-      <div className="w-full mb-16">
-        <h3 className="text-pink-600 text-xl font-extrabold mb-6 flex items-center gap-2">
-          👑 명예의 전당 (BEST 6)
-        </h3>
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full">
-          {bestPets.map((pet, idx) => (
-            <div key={pet.id} className="flex flex-col gap-2">
-              <motion.div 
-                className={`relative aspect-square rounded-3xl overflow-hidden group shadow-sm transition-all duration-300 hover:shadow-pink-500/50 hover:border-pink-400 ${pet.image ? 'border-2 border-pink-300 shadow-[0_0_15px_rgba(251,207,232,0.4)]' : 'bg-pink-900/30 border-2 border-pink-500/60 shadow-[inset_0_0_20px_rgba(236,72,153,0.2)]'}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                {pet.image && (
-                  <>
-                    <img src={pet.image} alt={pet.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute top-2 right-2 bg-yellow-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
-                      Best
-                    </div>
-                  </>
-                )}
-              </motion.div>
-              {pet.image && (
-                <div className="flex justify-end items-center gap-1.5 pr-3 pb-1 opacity-70">
-                  <div className="flex items-center gap-1.5 text-lg">
-                    <span className="drop-shadow-md">❤️</span>
-                    <span className="text-sm text-[#94A3B8] font-bold">{pet.hearts}</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="w-full border-t border-white/10 mb-16"></div>
-
-      {/* 새로운 친구들 */}
-      <div className="w-full">
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-white/90 text-lg font-bold flex items-center gap-2">
-            <span className="text-xl">🐶</span> 새로운 친구들
-          </h3>
-        </div>
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full">
-          {recentPets.map((pet, idx) => (
-            <div key={pet.id} className="flex flex-col gap-2">
-              <motion.div 
-                className={`relative aspect-square rounded-3xl overflow-hidden group shadow-sm transition-all duration-300 hover:shadow-blue-500/40 hover:border-blue-400 ${pet.image ? 'bg-black border border-white/10' : 'bg-white/10 border-2 border-white/40 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]'}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
-                viewport={{ once: true }}
-              >
-                {pet.image && (
-                  <>
-                    <img src={pet.image} alt={pet.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  </>
-                )}
-              </motion.div>
-              {pet.image && (
-                <div className="flex justify-end items-center gap-1.5 pr-3 pb-1 opacity-70 hover:opacity-100 transition-opacity">
-                  <button 
-                    className="flex items-center gap-1.5 text-lg hover:scale-110 transition-transform cursor-pointer"
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      if (pet.id.startsWith('empty-')) return;
-                      try {
-                        const petRef = doc(db, 'pets', pet.id);
-                        await updateDoc(petRef, { hearts: increment(1) });
-                      } catch (error) {
-                        console.error('Error updating heart: ', error);
-                      }
-                    }}
-                  >
-                    <span className="drop-shadow-md">❤️</span>
-                    <span className="text-sm text-[#94A3B8] font-bold">{pet.hearts}</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

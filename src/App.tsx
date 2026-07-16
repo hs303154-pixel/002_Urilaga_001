@@ -161,42 +161,15 @@ export default function App() {
     <div style={{ fontFamily: '"Space Mono", monospace' }}>
       <Navbar entranceComplete={entranceComplete} onNavigate={handleNavigate} />
       
-      {/* 아가포토 드롭다운 팝업 버튼 */}
-      <div className="fixed top-24 right-8 z-50 group">
-        
-        {/* 메인 버튼 (고정) */}
-        <div className="flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full shadow-lg transition-all duration-300 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:bg-white/20 cursor-default">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
-          </span>
-          <span className="text-white font-extrabold text-lg tracking-wide whitespace-nowrap">아가포토 바로가기</span>
-        </div>
-
-        {/* Hover 시 뜨는 팝업창 (아래로 드롭다운) */}
-        <div className="absolute top-full mt-3 right-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 flex flex-col gap-2 bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-2xl shadow-[0_10_30px_rgba(0,0,0,0.5)]">
-          <button 
-            className="flex items-center gap-3 px-6 py-3 hover:bg-white/20 rounded-xl transition-all w-full text-left"
-            onClick={() => window.open('https://u-agapotohwp.vercel.app', '_blank')}
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
-            </span>
-            <span className="text-white font-bold text-sm tracking-wider whitespace-nowrap">한글판 (KOR)</span>
-          </button>
-          
-          <button 
-            className="flex items-center gap-3 px-6 py-3 hover:bg-white/20 rounded-xl transition-all w-full text-left"
-            onClick={() => window.open('https://u-agapoto.xyz', '_blank')}
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            <span className="text-white font-bold text-sm tracking-wider whitespace-nowrap">글로벌판 (ENG)</span>
-          </button>
-        </div>
+      {/* 반려동물 사주 운세보기 버튼 */}
+      <div className="fixed top-24 right-8 z-50">
+        <button
+          onClick={() => window.open('https://u-agapotohwp.vercel.app/', '_blank')}
+          className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600/80 to-pink-500/80 backdrop-blur-xl border border-white/20 rounded-xl shadow-lg transition-all duration-300 hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:from-purple-500/90 hover:to-pink-400/90 hover:scale-105 cursor-pointer"
+        >
+          <span className="text-lg">🔮</span>
+          <span className="text-white font-bold text-sm tracking-wide whitespace-nowrap">반려동물 사주 운세보기</span>
+        </button>
       </div>
 
       {/* ════════════════ SECTION 1: HERO ════════════════ */}
@@ -411,39 +384,6 @@ export default function App() {
                </span>
             </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════ SECTION 3: METRICS ════════════════ */}
-      <section className="relative min-h-screen flex items-center justify-center bg-black">
-        {/* Video background (restored) */}
-        {VIDEO_URLS.metrics && (
-          <video
-            src={VIDEO_URLS.metrics}
-            className="absolute inset-0 w-full h-full object-cover opacity-50"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-        )}
-
-        <div className="relative z-20 pt-32 pb-32 px-6 max-w-7xl mx-auto w-full flex flex-col items-center justify-center min-h-[50vh]">
-          {/* Section Title */}
-          <motion.p
-            className="text-white/50 text-[26px] sm:text-[28px] tracking-[0.2em] uppercase text-center font-bold mb-0"
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.0 }}
-            viewport={{ once: true }}
-          >
-            PET GALLERY COLLECTION
-          </motion.p>
-          
-          {/* Aga Photo Global Picks Gallery */}
-          <div className="mt-16 relative w-full">
-            <PetBragGallery />
           </div>
         </div>
       </section>
