@@ -20,7 +20,8 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({ text, speed = 50
 
     const interval = setInterval(() => {
       if (currentIndex < text.length) {
-        setDisplayedText((prev) => prev + text[currentIndex]);
+        const char = text[currentIndex];
+        setDisplayedText((prev) => prev + char);
         currentIndex++;
       } else {
         clearInterval(interval);

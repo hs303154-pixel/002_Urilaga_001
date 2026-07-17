@@ -12,5 +12,7 @@ const firebaseConfig = {
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+console.log("FIREBASE PROJECT ID:", firebaseConfig.projectId);
+
 export const db = getFirestore(app);
 export const storage = getStorage(app);

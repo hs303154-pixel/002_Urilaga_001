@@ -36,6 +36,7 @@ import { SalonsPage } from './pages/SalonsPage';
 import { FuneralsPage } from './pages/FuneralsPage';
 import { PetGallery } from './components/PetGallery';
 import { PetBragGallery } from './components/PetBragGallery';
+import { CommunityBoard } from './components/CommunityBoard';
 
 const IconMap: Record<string, React.ElementType> = {
   PartyPopper, Cake, Gift, TreePine, Ghost, Tent, Camera,
@@ -299,12 +300,14 @@ export default function App() {
         />
 
         {/* Left column: Cinematic Text */}
-        <div className="relative w-full md:w-1/2 h-1/2 md:h-full z-20 flex items-center justify-center md:border-r border-white/10 p-8 md:p-16">
-          <TypewriterText 
-            text={cinematic.text} 
-            speed={50}
-            className="font-sans font-normal text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] tracking-[-0.02em] leading-relaxed text-white/90" 
-          />
+        <div className="relative w-full md:w-1/2 h-1/2 md:h-full z-20 flex flex-col items-center justify-center md:border-r border-white/10 p-8 md:p-16">
+          <div className="w-full max-w-xl">
+            <TypewriterText 
+              text={cinematic.text} 
+              speed={50}
+              className="font-sans font-normal text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] tracking-[-0.02em] leading-relaxed text-white/90" 
+            />
+          </div>
         </div>
 
         {/* Right column: Information Board */}
@@ -388,6 +391,12 @@ export default function App() {
         </div>
       </section>
 
+      {/* ════════════════ SECTION 3: COMMUNITY BOARD ════════════════ */}
+      <section className="relative w-full min-h-screen bg-[#010103] flex flex-col items-center p-6 md:p-16 pt-24 border-t border-white/10">
+        <div className="w-full max-w-5xl mx-auto flex flex-col">
+          <CommunityBoard />
+        </div>
+      </section>
 
       {/* ════════════════ FOOTER ════════════════ */}
       <footer className="bg-black">
