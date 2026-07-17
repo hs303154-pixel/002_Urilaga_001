@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Navbar } from '../components/Navbar';
 import { motion } from 'framer-motion';
 import { partyShops } from '../data/partyShops';
 
@@ -15,34 +16,7 @@ export const PartyPage: React.FC<PartyPageProps> = ({ onBack, onNavigate }) => {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       {/* Header / Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-20 px-6 sm:px-8 flex items-center justify-between backdrop-blur-md bg-black/50 border-b border-white/10">
-        {/* Logo pill */}
-        <motion.div
-          onClick={onBack}
-          className="h-12 px-5 bg-white/15 backdrop-blur-md rounded-[14px] flex items-center gap-2.5 cursor-pointer"
-          whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.22)' }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <span className="text-[32px] leading-none mb-1">🐶</span>
-          <div className="flex flex-col justify-center">
-            <span className="text-[32px] font-bold tracking-tight text-white leading-none">
-              팻 갤러리
-            </span>
-          </div>
-        </motion.div>
-
-        {/* Navigation Buttons */}
-        <div className="flex items-center gap-3">
-          {onNavigate && (
-            <>
-              <button onClick={() => onNavigate('party')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">파티</button>
-              <button onClick={() => onNavigate('fashion')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">패션</button>
-              <button onClick={() => onNavigate('food')} className="px-5 py-2.5 bg-white/15 hover:bg-blue-500 text-white rounded-[14px] text-sm font-bold tracking-wider backdrop-blur-md transition-all active:scale-95 shadow-sm">먹거리</button>
-            </>
-          )}
-          <div className="font-bold tracking-[0.2em] text-lg ml-4">U-AGA</div>
-        </div>
-      </nav>
+      <Navbar entranceComplete={true} onNavigate={onNavigate as any} />
 
       {/* Hero Section */}
       <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
