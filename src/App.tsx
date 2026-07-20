@@ -34,7 +34,6 @@ import { PharmaciesPage } from './pages/PharmaciesPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
 import { TrailsPage } from './pages/TrailsPage';
 import { SalonsPage } from './pages/SalonsPage';
-import { FuneralsPage } from './pages/FuneralsPage';
 import { PetGallery } from './components/PetGallery';
 import { PetBragGallery } from './components/PetBragGallery';
 import { CommunityBoard } from './components/CommunityBoard';
@@ -45,7 +44,7 @@ const IconMap: Record<string, React.ElementType> = {
   Bone, CakeSlice, Cookie, Salad, Utensils
 };
 
-export type ActivePage = 'home' | 'party' | 'fashion' | 'food' | 'hospital' | 'pharmacy' | 'facility' | 'trail' | 'salon' | 'funeral';
+export type ActivePage = 'home' | 'party' | 'fashion' | 'food' | 'hospital' | 'pharmacy' | 'facility' | 'trail' | 'salon';
 
 export default function App() {
   const [activePage, setActivePage] = useState<ActivePage>('home');
@@ -123,7 +122,6 @@ export default function App() {
   if (activePage === 'facility') return <FacilitiesPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
   if (activePage === 'trail') return <TrailsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
   if (activePage === 'salon') return <SalonsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
-  if (activePage === 'funeral') return <FuneralsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
 
   return (
     <div style={{ fontFamily: '"Space Mono", monospace' }}>

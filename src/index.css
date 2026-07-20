@@ -60,7 +60,7 @@ body {
   text-align: center;
   line-height: 1.8;
   transform: rotateX(60deg);
-  animation: crawl 15s linear infinite;
+  animation: crawl 15s linear 1 forwards;
 }
 
 @media (min-width: 768px) {
