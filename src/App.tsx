@@ -18,6 +18,7 @@ import { TypewriterText } from './components/TypewriterText';
 import { ConnectAILabLogo } from './components/ConnectAILabLogo';
 import PayPalCheckoutButton from './components/payment/PayPalCheckoutButton';
 import TossCheckoutButton from './components/payment/TossCheckoutButton';
+import { Analytics } from "@vercel/analytics/react";
 import { useAuth } from './contexts/AuthContext';
 import { createOrder } from './lib/firestore';
 import { PRODUCTS } from './lib/paypal';
@@ -77,41 +78,7 @@ export default function App() {
     [user]
   );
 
-  /* ── Hero video mouse-scrub ── */
-  const heroVideoRef = useRef<HTMLVideoElement>(null);
-  const targetTimeRef = useRef(0);
-  const isSeekingRef = useRef(false);
 
-  const handleSeeked = useCallback(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-    isSeekingRef.current = false;
-    if (Math.abs(video.currentTime - targetTimeRef.current) > 0.01) {
-      isSeekingRef.current = true;
-      video.currentTime = targetTimeRef.current;
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const video = heroVideoRef.current;
-      if (!video || !video.duration) return;
-      const deltaX = e.movementX;
-      const sensitivity = 1.5; // 변경됨: 마우스 한 번 스와이프로 영상 끝까지 도달하도록 0.8 -> 1.5로 증가
-      const change = (deltaX / window.innerWidth) * video.duration * sensitivity;
-      targetTimeRef.current = Math.max(
-        0,
-        Math.min(video.duration, targetTimeRef.current + change)
-      );
-      if (!isSeekingRef.current) {
-        isSeekingRef.current = true;
-        video.currentTime = targetTimeRef.current;
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   /* ── Entrance delay ── */
   useEffect(() => {
@@ -160,21 +127,21 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: '"Space Mono", monospace' }}>
+      <Analytics />
       <Navbar entranceComplete={entranceComplete} onNavigate={handleNavigate} />
       
       {/* ════════════════ SECTION 1: HERO ════════════════ */}
       <section className="relative h-screen h-[100dvh] flex flex-col">
-        {/* Video background (mouse-scrubbed) */}
+        {/* Video background (AutoPlay once) */}
         {VIDEO_URLS.hero && (
           <div className="absolute inset-x-0 top-0 bottom-8 sm:bottom-12 pointer-events-none">
             <video
-              ref={heroVideoRef}
               src={VIDEO_URLS.hero}
               className="w-full h-full object-contain object-bottom scale-[0.7] origin-bottom mix-blend-screen"
+              autoPlay
               playsInline
               muted
               preload="auto"
-              onSeeked={handleSeeked}
             />
           </div>
         )}
@@ -364,17 +331,7 @@ export default function App() {
                </span>
             </div>
 
-            {/* Card 6: Funeral Home */}
-            <div 
-              onClick={() => setActivePage('funeral')}
-              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-zinc-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(161,161,170,0.3)] overflow-hidden"
-            >
-               <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">🕯️</span>
-               <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-zinc-400 transition-colors whitespace-nowrap tracking-tight">장례식장</span>
-               <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed break-keep">
-                 소중한 아이와의<br/>마지막 소풍
-               </span>
-            </div>
+
             </div>
           </div>
         </div>
