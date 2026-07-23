@@ -1,0 +1,37 @@
+name: Monthly Auto Verification & Deploy
+
+on:
+  schedule:
+    # Runs at 00:00 UTC on the 1st of every month
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  verify-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Place Data Verification
+        env:
+          VITE_KAKAO_REST_API_KEY: ${{ secrets.VITE_KAKAO_REST_API_KEY || '7f54a9edc73a4ce7b2800825f1c1ed8e' }}
+          VITE_NAVER_CLIENT_ID: ${{ secrets.VITE_NAVER_CLIENT_ID || 'v4m5bufxf7' }}
+          VITE_NAVER_CLIENT_SECRET: ${{ secrets.VITE_NAVER_CLIENT_SECRET || 'VGgcWWFDumBKQpePhl3h2gkPQ49qg0Q2aRKGRxMo' }}
+        run: node scripts/verify_places.js
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/data/*.json
+          git status
+          git diff --quiet && git diff --staged --quiet || (git commit -m "auto: monthly place data verification update [skip ci]" && git push)
