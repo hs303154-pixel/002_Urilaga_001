@@ -110,7 +110,7 @@ export function Navbar({ entranceComplete, onNavigate }: NavbarProps) {
       </motion.nav>
 
       {/* 반려동물 사주 운세보기 버튼 */}
-      <div className="fixed top-24 right-8 z-50 hidden sm:block">
+      <div className="fixed z-50 top-20 left-1/2 -translate-x-1/2 sm:top-24 sm:left-auto sm:translate-x-0 sm:right-8 w-max">
         <button
           onClick={() => window.open('https://u-agapotohwp.vercel.app/', '_blank')}
           className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600/80 to-pink-500/80 backdrop-blur-xl border border-white/20 rounded-xl shadow-lg transition-all duration-300 hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:from-purple-500/90 hover:to-pink-400/90 hover:scale-105 cursor-pointer"

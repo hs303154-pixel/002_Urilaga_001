@@ -34,6 +34,12 @@ import { PharmaciesPage } from './pages/PharmaciesPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
 import { TrailsPage } from './pages/TrailsPage';
 import { SalonsPage } from './pages/SalonsPage';
+import { DiningPage } from './pages/DiningPage';
+import { PetParksPage } from './pages/PetParksPage';
+import { HotelsPage } from './pages/HotelsPage';
+import { KindergartensPage } from './pages/KindergartensPage';
+import { FuneralsPage } from './pages/FuneralsPage';
+import { PetTaxisPage } from './pages/PetTaxisPage';
 import { PetGallery } from './components/PetGallery';
 import { PetBragGallery } from './components/PetBragGallery';
 import { CommunityBoard } from './components/CommunityBoard';
@@ -44,7 +50,7 @@ const IconMap: Record<string, React.ElementType> = {
   Bone, CakeSlice, Cookie, Salad, Utensils
 };
 
-export type ActivePage = 'home' | 'party' | 'fashion' | 'food' | 'hospital' | 'pharmacy' | 'facility' | 'trail' | 'salon';
+export type ActivePage = 'home' | 'party' | 'fashion' | 'food' | 'hospital' | 'pharmacy' | 'facility' | 'trail' | 'salon' | 'dining' | 'petpark' | 'hotel' | 'kindergarten' | 'funeral' | 'pettaxi';
 
 export default function App() {
   const [activePage, setActivePage] = useState<ActivePage>('home');
@@ -120,8 +126,14 @@ export default function App() {
   if (activePage === 'hospital') return <HospitalsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
   if (activePage === 'pharmacy') return <PharmaciesPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
   if (activePage === 'facility') return <FacilitiesPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'dining') return <DiningPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'petpark') return <PetParksPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
   if (activePage === 'trail') return <TrailsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
   if (activePage === 'salon') return <SalonsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'hotel') return <HotelsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'kindergarten') return <KindergartensPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'funeral') return <FuneralsPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
+  if (activePage === 'pettaxi') return <PetTaxisPage onBack={() => setActivePage('home')} onNavigate={handleNavigate} />;
 
   return (
     <div style={{ fontFamily: '"Space Mono", monospace' }}>
@@ -265,70 +277,130 @@ export default function App() {
         </div>
 
         {/* Right column: Information Board */}
-        <div className="relative w-full md:w-1/2 h-1/2 md:h-full z-20 flex flex-col items-center justify-center p-6 md:p-12 bg-black/40 backdrop-blur-sm">
-          <div className="w-full max-w-md flex flex-col items-start">
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-widest mb-6">정보게시판</h2>
+        <div className="relative w-full md:w-1/2 h-1/2 md:h-full z-20 flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-3xl flex flex-col items-start">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-widest mb-4 md:mb-6">정보게시판</h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 w-full">
               {/* Card 1: Animal Hospital */}
               <div 
                 onClick={() => setActivePage('hospital')}
-                className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-blue-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-blue-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
               >
-                <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">🏥</span>
-              <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-blue-400 transition-colors">전국동물병원</span>
-              <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
-                우리아가 주변의<br/>안전한 주치의
-              </span>
-            </div>
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🏥</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-blue-400 transition-colors text-center">전국동물병원</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  우리아가 주변의<br/>안전한 주치의
+                </span>
+              </div>
             
               {/* Card 2: Animal Pharmacy */}
-            <div 
-              onClick={() => setActivePage('pharmacy')}
-              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-pink-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(244,114,182,0.3)]"
-            >
-              <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">💊</span>
-              <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-pink-400 transition-colors">전국동물약국</span>
-              <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
-                반려동물 의약품<br/>취급처 안내
-              </span>
-            </div>
-            {/* Card 3: Pet Facilities */}
-            <div 
-              onClick={() => setActivePage('facility')}
-              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-amber-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]"
-            >
-              <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">☕</span>
-              <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-amber-400 transition-colors">동반 시설</span>
-              <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
-                식당/카페 등<br/>동반가능 장소
-              </span>
-            </div>
-              
-            {/* Card 4: Trails */}
-            <div 
-              onClick={() => setActivePage('trail')}
-              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-green-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(74,222,128,0.3)]"
-            >
-               <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">🌳</span>
-               <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-green-400 transition-colors">산책로/여행지</span>
-               <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
-                 자연 속 힐링<br/>야외 공간
-               </span>
-            </div>
+              <div 
+                onClick={() => setActivePage('pharmacy')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-pink-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(244,114,182,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">💊</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-pink-400 transition-colors text-center">전국동물약국</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  반려동물 의약품<br/>취급처 안내
+                </span>
+              </div>
 
-            {/* Card 5: Beauty Salon */}
-            <div 
-              onClick={() => setActivePage('salon')}
-              className="group cursor-pointer h-full min-h-[140px] md:min-h-[180px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-fuchsia-400 transition-all flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(217,70,239,0.3)]"
-            >
-               <span className="text-4xl md:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">✂️</span>
-               <span className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-fuchsia-400 transition-colors">동물 미용실</span>
-               <span className="text-[10px] md:text-xs text-white/50 mt-1 sm:mt-2 text-center leading-tight sm:leading-relaxed">
-                 깔끔하고 예쁘게<br/>미용/스파
-               </span>
-            </div>
+              {/* Card 3: Dining & Cafe */}
+              <div 
+                onClick={() => setActivePage('dining')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-amber-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">☕</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-amber-400 transition-colors text-center">동반 식당/카페</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  맛있고 쾌적한<br/>동반 맛집안내
+                </span>
+              </div>
 
+              {/* Card 4: Pet Park & Pool */}
+              <div 
+                onClick={() => setActivePage('petpark')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-cyan-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🏊‍♂️</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-cyan-400 transition-colors text-center">펫파크/수영장</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  신나게 뛰놀고<br/>첨벙첨벙 수영
+                </span>
+              </div>
+
+              {/* Card 5: Trails */}
+              <div 
+                onClick={() => setActivePage('trail')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-green-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(74,222,128,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🌳</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-green-400 transition-colors text-center">산책로/여행지</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  자연 속 힐링<br/>야외 공간
+                </span>
+              </div>
+
+              {/* Card 6: Beauty Salon */}
+              <div 
+                onClick={() => setActivePage('salon')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-fuchsia-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(217,70,239,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">✂️</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-fuchsia-400 transition-colors text-center">동물 미용실</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  깔끔하고 예쁘게<br/>미용/스파
+                </span>
+              </div>
+
+              {/* Card 7: Pet Hotel */}
+              <div 
+                onClick={() => setActivePage('hotel')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-indigo-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(129,140,248,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🏨</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-indigo-400 transition-colors text-center">전국 동물호텔</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  안심하고 맡기는<br/>편안한 호텔
+                </span>
+              </div>
+
+              {/* Card 8: Pet Kindergarten */}
+              <div 
+                onClick={() => setActivePage('kindergarten')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-yellow-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(250,204,21,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🏫</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-yellow-400 transition-colors text-center">애견유치원</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  낮 시간동안 케어<br/>사회성/교육
+                </span>
+              </div>
+
+              {/* Card 9: Pet Funeral */}
+              <div 
+                onClick={() => setActivePage('funeral')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-purple-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(192,132,252,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🌈</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-purple-400 transition-colors text-center">동물장례식장</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  마지막 배웅을 위한<br/>경건한 장묘공간
+                </span>
+              </div>
+
+              {/* Card 10: Pet Taxi */}
+              <div 
+                onClick={() => setActivePage('pettaxi')}
+                className="group cursor-pointer h-full min-h-[120px] md:min-h-[150px] rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-orange-400 transition-all flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(351,146,60,0.3)]"
+              >
+                <span className="text-3xl md:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">🚕</span>
+                <span className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-orange-400 transition-colors text-center">펫택시/이동</span>
+                <span className="text-[10px] md:text-[11px] text-white/50 mt-1 text-center leading-tight">
+                  편안하고 안전한<br/>반려동물 전용이동
+                </span>
+              </div>
 
             </div>
           </div>

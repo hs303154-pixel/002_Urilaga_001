@@ -36,13 +36,11 @@ export function CommunityBoard() {
 
   return (
     <div className="w-full flex flex-col gap-6 mt-12">
-      <div className="flex items-end justify-between mb-2">
-        <div>
-          <h2 className="text-xl md:text-2xl font-bold text-white tracking-widest mb-1">반려동물 정보 교류 라운지</h2>
-        </div>
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-4 w-full">
+        <h2 className="text-xl md:text-2xl font-bold text-white tracking-widest flex-1 min-w-[200px]">반려동물 정보 교류 라운지</h2>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-white text-sm font-medium transition-all hover:scale-105"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-white text-sm font-medium transition-all hover:scale-105 flex-shrink-0"
         >
           <PenSquare size={16} />
           글쓰기
